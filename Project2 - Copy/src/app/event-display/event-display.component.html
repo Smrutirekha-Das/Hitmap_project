@@ -1,0 +1,41 @@
+<div>
+  <form [formGroup]="filterForm" (ngSubmit)="applyFilters()">
+    <label for="startDate">Start Date:</label>
+    <input id="startDate" type="date" formControlName="startDate">
+    
+    <label for="endDate">End Date:</label>
+    <input id="endDate" type="date" formControlName="endDate">
+    
+    <label for="minIntensity">Min Intensity:</label>
+    <input id="minIntensity" type="number" formControlName="minIntensity">
+    
+    <label for="maxIntensity">Max Intensity:</label>
+    <input id="maxIntensity" type="number" formControlName="maxIntensity">
+    
+    <button type="submit">Apply Filters</button>
+  </form>
+</div>
+<div *ngIf="heatmapData.length > 0; else noData">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time Slot</th>
+          <th>Frequency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of heatmapData">
+          <td>{{ data.date }}</td>
+          <td>{{ data.timeSlot }}</td>
+          <td [ngStyle]="{'background-color': data.colorIntensity}">
+            {{ data.frequency }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noData>
+    <p>No event data available.</p>
+  </ng-template>
+  
